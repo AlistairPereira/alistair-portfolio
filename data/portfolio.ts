@@ -81,7 +81,7 @@ export const skills = [
 export const experience = [
   {
     role: "Data Analyst Intern",
-    company: "Biotest AG, Germany",
+    company: "Biotest GmbH & Co. KGaA, Germany",
     period: "Feb 2026 - May 2026",
     description:
       "Developed Power BI dashboards to track operational and financial KPIs, performance trends, and business reporting needs. Improved reporting efficiency by automating dashboard updates, validating data accuracy, and turning business data into clear insights for decision-making.",
