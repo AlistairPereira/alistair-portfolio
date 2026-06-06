@@ -21,7 +21,7 @@ import {
   skills,
 } from "../data/portfolio";
 
-const navItems = ["Cover", "About", "Skills", "Experience", "Projects", "Contact"];
+const navItems = ["Home", "About", "Skills", "Experience", "Projects", "Contact"];
 
 export default function Home() {
   return (
