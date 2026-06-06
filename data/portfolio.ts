@@ -130,7 +130,7 @@ export const experience = [
     company: "Biotest GmbH & Co. KGaA, Germany",
     period: "Feb 2026 - May 2026",
     description:
-      "Developed interactive Power BI dashboards to monitor operational and financial KPIs, performance trends, and business reporting needs. Built data models using Power Query and DAX, automated dashboard updates, and validated multi-source datasets to improve reporting accuracy and reliability.",
+      "Developed Power BI dashboards to track operational and financial KPIs, performance trends, and business reporting needs. Improved reporting efficiency by automating dashboard updates, validating data accuracy, and turning business data into clear insights for decision-making.",
   },
   {
     role: "Data Science Research Student",
