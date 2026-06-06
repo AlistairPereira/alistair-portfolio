@@ -4,7 +4,7 @@ export const profile = {
   title: "Data Analytics |  AI/ML | QA Testing ",
   subtitle: "Power BI • SQL • Manual Testing • Postman • Python • AI/ML",
   location: "Germany",
-  email: "your-email@gmail.com",
+  email: "alistairpereira241999@gmail.com",
 
   // Replace with your real links
   linkedin: "https://www.linkedin.com/in/alistair-pereira-45571018a/",
