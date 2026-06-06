@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import {
-  bookStats,
   chapters,
   experience,
   profile,
@@ -22,7 +21,7 @@ import {
   skills,
 } from "../data/portfolio";
 
-const navItems = ["Home", "About", "Skills", "Experience", "Projects", "Contact"];
+const navItems = ["Cover", "About", "Skills", "Experience", "Projects", "Contact"];
 
 export default function Home() {
   return (
@@ -31,71 +30,80 @@ export default function Home() {
 
       <section id="cover" className="px-4 pt-20 pb-8">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
-              className="relative overflow-hidden rounded-[1.8rem] border border-black/10 bg-white p-6 shadow-[0_22px_70px_rgba(15,23,42,0.10)] sm:p-7"
+              className="relative overflow-hidden rounded-[1.8rem] border border-black/10 bg-white p-8 shadow-[0_22px_70px_rgba(15,23,42,0.10)] sm:p-10"
             >
               <div className="absolute left-0 top-0 h-full w-5 bg-cyan-400" />
 
               <div className="relative z-10 pl-4">
-                <h1 className="mt-2 max-w-xl text-5xl font-black leading-[0.95] tracking-tight text-slate-950 sm:text-6xl xl:text-7xl">
+                <p className="mb-5 inline-flex rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-sm font-semibold text-cyan-800">
+                  Portfolio • Data Analytics • AI/ML • QA
+                </p>
+
+                <h1 className="max-w-3xl text-5xl font-black leading-[0.95] tracking-tight text-slate-950 sm:text-6xl xl:text-7xl">
                   {profile.shortName}
                 </h1>
 
-                <p className="mt-4 max-w-md text-lg font-semibold text-slate-800">
+                <p className="mt-5 max-w-2xl text-xl font-bold text-slate-800">
                   {profile.title}
                 </p>
 
-                <div className="mt-7">
-                  <div className="relative h-[330px] overflow-hidden rounded-[1.5rem] border border-black/10 bg-slate-100 sm:h-[360px] xl:h-[380px]">
-                    <img
-                      src="/profile.jpg"
-                      alt="Alistair Pereira"
-                      className="h-full w-full object-cover object-top"
-                    />
+                <HeroVisualPanel />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-transparent" />
+                <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-2xl border border-black/10 bg-[#f8f8f4] p-4">
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-cyan-700">
+                      Analytics
+                    </p>
+                    <p className="mt-2 text-sm font-bold text-slate-950">
+                      Power BI, SQL, KPIs
+                    </p>
+                  </div>
 
-                    <div className="absolute bottom-4 left-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900">
-                      Data • AI/ML • QA
-                    </div>
+                  <div className="rounded-2xl border border-black/10 bg-[#f8f8f4] p-4">
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-cyan-700">
+                      AI/ML
+                    </p>
+                    <p className="mt-2 text-sm font-bold text-slate-950">
+                      ML, NLP, LLM Agents
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-black/10 bg-[#f8f8f4] p-4">
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-cyan-700">
+                      QA
+                    </p>
+                    <p className="mt-2 text-sm font-bold text-slate-950">
+                      Manual, API, SQL
+                    </p>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-5">
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65 }}
-                className="rounded-[1.8rem] border border-black/10 bg-white p-5 shadow-[0_22px_70px_rgba(15,23,42,0.08)] sm:p-6"
+                className="overflow-hidden rounded-[1.8rem] border border-black/10 bg-white p-5 shadow-[0_22px_70px_rgba(15,23,42,0.08)]"
               >
-                <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-2xl font-black text-slate-950 sm:text-3xl">
-                    Portfolio Chapters
-                  </h2>
+                <div className="relative h-[360px] overflow-hidden rounded-[1.4rem] border border-black/10 bg-slate-100">
+                  <img
+                    src="/profile.jpg"
+                    alt="Alistair Pereira"
+                    className="h-full w-full object-cover object-top"
+                  />
 
-                  <div className="hidden h-12 w-12 items-center justify-center rounded-2xl bg-cyan-400 text-slate-950 sm:flex">
-                    <Rocket size={24} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-transparent" />
+
+                  <div className="absolute bottom-4 left-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900">
+                    Data • AI/ML • QA
                   </div>
-                </div>
-
-                <div className="grid gap-3 md:grid-cols-2">
-                  {chapters.map((chapter) => (
-                    <a
-                      key={chapter.title}
-                      href={chapter.href}
-                      className="group flex min-h-[95px] items-center rounded-2xl border border-black/10 bg-[#f8f8f4] p-5 transition hover:-translate-y-1 hover:border-cyan-400 hover:bg-white"
-                    >
-                      <h3 className="text-xl font-black text-slate-950">
-                        {chapter.title}
-                      </h3>
-                    </a>
-                  ))}
                 </div>
               </motion.div>
 
@@ -103,22 +111,31 @@ export default function Home() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.75 }}
-                className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+                className="rounded-[1.8rem] border border-black/10 bg-white p-5 shadow-[0_22px_70px_rgba(15,23,42,0.08)]"
               >
-                {bookStats.map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-2xl border border-black/10 bg-slate-950 p-4 text-white shadow-[0_15px_45px_rgba(15,23,42,0.10)]"
-                  >
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-cyan-300">
-                      {item.label}
-                    </p>
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="text-2xl font-black text-slate-950">
+                    Explore Portfolio
+                  </h2>
 
-                    <p className="mt-2 text-sm font-bold leading-6">
-                      {item.value}
-                    </p>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-400 text-slate-950">
+                    <Rocket size={22} />
                   </div>
-                ))}
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {chapters.map((chapter) => (
+                    <a
+                      key={chapter.title}
+                      href={chapter.href}
+                      className="group rounded-2xl border border-black/10 bg-[#f8f8f4] p-4 transition hover:-translate-y-1 hover:border-cyan-400 hover:bg-white"
+                    >
+                      <h3 className="text-lg font-black text-slate-950">
+                        {chapter.title}
+                      </h3>
+                    </a>
+                  ))}
+                </div>
               </motion.div>
             </div>
           </div>
@@ -325,10 +342,127 @@ export default function Home() {
       </BookSection>
 
       <footer className="border-t border-black/10 px-5 py-6 text-center text-sm text-slate-600">
-        © {new Date().getFullYear()} {profile.name}. Digital portfolio book
-        built with Next.js, Tailwind CSS, and TypeScript.
+        © {new Date().getFullYear()} {profile.name}. Digital portfolio built
+        with Next.js, Tailwind CSS, and TypeScript.
       </footer>
     </main>
+  );
+}
+
+function HeroVisualPanel() {
+  return (
+    <div className="mt-8 rounded-[1.6rem] border border-black/10 bg-[#f8f8f4] p-5">
+      <div className="grid gap-4 md:grid-cols-3">
+        <div className="overflow-hidden rounded-[1.3rem] border border-black/10 bg-white shadow-sm">
+          <div className="relative h-44 bg-gradient-to-br from-cyan-50 via-white to-slate-100 p-5">
+            <div className="absolute right-5 top-5 h-16 w-16 rounded-full border-[10px] border-cyan-400 border-r-slate-950" />
+
+            <div className="absolute bottom-8 left-5 flex items-end gap-2">
+              <span className="h-12 w-5 rounded-t bg-cyan-400" />
+              <span className="h-20 w-5 rounded-t bg-slate-950" />
+              <span className="h-16 w-5 rounded-t bg-cyan-300" />
+              <span className="h-24 w-5 rounded-t bg-slate-300" />
+              <span className="h-14 w-5 rounded-t bg-slate-950" />
+            </div>
+
+            <svg className="absolute inset-x-5 bottom-4 h-20" viewBox="0 0 240 80">
+              <path
+                d="M8 62 C35 20, 55 75, 88 38 C116 7, 136 45, 162 28 C190 10, 205 58, 232 24"
+                fill="none"
+                stroke="#f97316"
+                strokeWidth="4"
+                strokeLinecap="round"
+              />
+              {[8, 88, 162, 232].map((x, index) => (
+                <circle
+                  key={index}
+                  cx={x}
+                  cy={index === 0 ? 62 : index === 1 ? 38 : index === 2 ? 28 : 24}
+                  r="5"
+                  fill="#ffffff"
+                  stroke="#f97316"
+                  strokeWidth="4"
+                />
+              ))}
+            </svg>
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-[1.3rem] border border-black/10 bg-white shadow-sm">
+          <div className="relative h-44 bg-gradient-to-br from-slate-950 via-cyan-950 to-slate-900 p-5">
+            <div className="absolute inset-0 opacity-25">
+              <svg className="h-full w-full" viewBox="0 0 300 180">
+                {Array.from({ length: 18 }).map((_, index) => {
+                  const x = 25 + ((index * 37) % 250);
+                  const y = 20 + ((index * 29) % 130);
+                  return (
+                    <circle
+                      key={index}
+                      cx={x}
+                      cy={y}
+                      r="3"
+                      fill="#67e8f9"
+                    />
+                  );
+                })}
+                <path
+                  d="M30 130 C70 60, 120 110, 165 50 C205 10, 230 80, 270 35"
+                  fill="none"
+                  stroke="#67e8f9"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M38 48 C90 100, 150 20, 255 120"
+                  fill="none"
+                  stroke="#67e8f9"
+                  strokeWidth="1.5"
+                />
+              </svg>
+            </div>
+
+            <div className="absolute left-1/2 top-1/2 h-24 w-20 -translate-x-1/2 -translate-y-1/2 rounded-[45%] border-2 border-cyan-300 bg-cyan-300/10" />
+            <div className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-cyan-200 bg-white/10" />
+            <div className="absolute left-[47%] top-[39%] h-3 w-3 rounded-full bg-cyan-300" />
+            <div className="absolute left-[55%] top-[50%] h-3 w-3 rounded-full bg-cyan-300" />
+            <div className="absolute left-[42%] top-[56%] h-3 w-3 rounded-full bg-cyan-300" />
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-[1.3rem] border border-black/10 bg-white shadow-sm">
+          <div className="relative h-44 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950 p-5">
+            <div className="absolute inset-x-6 top-12 flex items-center justify-between">
+              <div className="flex flex-col items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-cyan-300 bg-cyan-300/10 text-cyan-200">
+                  <Database size={22} />
+                </div>
+              </div>
+
+              <div className="h-[2px] flex-1 bg-cyan-300/50" />
+
+              <div className="flex flex-col items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-cyan-300 bg-cyan-300/10 text-cyan-200">
+                  <Bug size={22} />
+                </div>
+              </div>
+
+              <div className="h-[2px] flex-1 bg-cyan-300/50" />
+
+              <div className="flex flex-col items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-cyan-300 bg-cyan-300/10 text-cyan-200">
+                  <Rocket size={22} />
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-7 left-6 right-6 grid grid-cols-3 gap-3">
+              <div className="h-2 rounded-full bg-cyan-300" />
+              <div className="h-2 rounded-full bg-white/30" />
+              <div className="h-2 rounded-full bg-cyan-300" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
