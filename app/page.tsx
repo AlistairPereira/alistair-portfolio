@@ -1,24 +1,74 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
   BarChart3,
   Briefcase,
   Bug,
+  Check,
+  Copy,
   Database,
   Download,
+  ExternalLink,
   Mail,
   MapPin,
   Menu,
   Rocket,
+  X,
 } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { experience, profile, projects, skills } from "../data/portfolio";
 
 const navItems = ["Home", "Experience", "Skills", "Projects", "Contact"];
 
+type Project = (typeof projects)[number];
+
 export default function Home() {
+  const [activeSection, setActiveSection] = useState("Home");
+  const [selectedFilter, setSelectedFilter] = useState("All");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const projectFilters = useMemo(() => {
+    const uniqueTypes = Array.from(
+      new Set(projects.map((project) => project.type))
+    );
+    return ["All", ...uniqueTypes];
+  }, []);
+
+  const filteredProjects = useMemo(() => {
+    if (selectedFilter === "All") return projects;
+    return projects.filter((project) => project.type === selectedFilter);
+  }, [selectedFilter]);
+
+  useEffect(() => {
+    const sectionIds = navItems.map((item) => item.toLowerCase());
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries.find((entry) => entry.isIntersecting);
+
+        if (visibleEntry) {
+          const id = visibleEntry.target.id;
+          const formatted = id.charAt(0).toUpperCase() + id.slice(1);
+          setActiveSection(formatted);
+        }
+      },
+      {
+        root: null,
+        threshold: 0.35,
+        rootMargin: "-90px 0px -45% 0px",
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#080f1f] text-white">
       <div className="pointer-events-none fixed inset-0 -z-10">
@@ -27,7 +77,7 @@ export default function Home() {
         <div className="absolute bottom-[-10%] left-[30%] h-[420px] w-[420px] rounded-full bg-blue-600/20 blur-[120px]" />
       </div>
 
-      <Navbar />
+      <Navbar activeSection={activeSection} />
 
       <section id="home" className="px-5 pt-24 pb-12">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -186,63 +236,42 @@ export default function Home() {
       </BookSection>
 
       <BookSection id="projects" title="Projects">
-        <div className="grid gap-5 lg:grid-cols-2">
-          {projects.map((project) => (
-            <motion.article
-              key={project.title}
-              whileHover={{ y: -5 }}
-              className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-white/[0.08] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl transition hover:border-cyan-300/60"
+        <div className="mb-6 flex flex-wrap gap-3">
+          {projectFilters.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => setSelectedFilter(filter)}
+              className={`rounded-full border px-4 py-2 text-sm font-bold transition ${
+                selectedFilter === filter
+                  ? "border-cyan-300 bg-cyan-300 text-slate-950"
+                  : "border-white/10 bg-white/[0.08] text-slate-300 hover:border-cyan-300/60 hover:text-cyan-200"
+              }`}
             >
-              <div className="mb-6">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="max-w-xl text-2xl font-black text-white">
-                    {project.title}
-                  </h3>
+              {filter}
+            </button>
+          ))}
+        </div>
 
-                  {"repo" in project && project.repo ? (
-                    <a
-                      href={project.repo}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${project.title} GitHub repository`}
-                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-cyan-300/10 text-cyan-300 transition hover:scale-105 hover:bg-cyan-300 hover:text-slate-950"
-                    >
-                      <FaGithub size={20} />
-                    </a>
-                  ) : null}
-                </div>
-
-                <span className="mt-4 inline-flex rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1 text-sm font-semibold text-amber-200">
-                  {project.type}
-                </span>
-              </div>
-
-              <CaseLine label="Problem" text={project.problem} />
-              <CaseLine label="Approach" text={project.approach} />
-              <CaseLine label="Outcome" text={project.outcome} />
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                {project.tools.map((tool) => (
-                  <span
-                    key={tool}
-                    className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm font-semibold text-cyan-100"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            </motion.article>
+        <div className="grid gap-5 lg:grid-cols-2">
+          {filteredProjects.map((project) => (
+            <ProjectCard
+              key={project.title}
+              project={project}
+              onOpen={() => setSelectedProject(project)}
+            />
           ))}
         </div>
       </BookSection>
 
       <BookSection id="contact" title="Contact">
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <ContactCard
             icon={<Mail size={24} />}
             label="Email"
             value={profile.email}
             href={`mailto:${profile.email}`}
+            copyValue={profile.email}
           />
 
           <ContactCard
@@ -272,11 +301,18 @@ export default function Home() {
         © {new Date().getFullYear()} {profile.name}. Digital portfolio built
         with Next.js, Tailwind CSS, and TypeScript.
       </footer>
+
+      {selectedProject ? (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      ) : null}
     </main>
   );
 }
 
-function Navbar() {
+function Navbar({ activeSection }: { activeSection: string }) {
   return (
     <header className="fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#080f1f]/80 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
@@ -288,15 +324,23 @@ function Navbar() {
         </a>
 
         <div className="hidden items-center gap-6 lg:flex">
-          {navItems.map((item) => (
-            <a
-              key={item}
-              href={item === "Home" ? "#home" : `#${item.toLowerCase()}`}
-              className="text-sm font-medium text-slate-300 transition hover:text-cyan-300"
-            >
-              {item}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const isActive = activeSection === item;
+
+            return (
+              <a
+                key={item}
+                href={item === "Home" ? "#home" : `#${item.toLowerCase()}`}
+                className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
+                  isActive
+                    ? "bg-cyan-300/10 text-cyan-300"
+                    : "text-slate-300 hover:text-cyan-300"
+                }`}
+              >
+                {item}
+              </a>
+            );
+          })}
         </div>
       </nav>
     </header>
@@ -478,11 +522,11 @@ function ExperienceMap() {
               </filter>
             </defs>
 
-            <text x="42" y="42" fill="#67e8f9" fontSize="16" fontWeight="800">
+            <text x="42" y="42" fill="#67e8f9" fontSize="17" fontWeight="800">
               Career Progression
             </text>
 
-            <text x="42" y="66" fill="#94a3b8" fontSize="12" fontWeight="600">
+            <text x="42" y="68" fill="#94a3b8" fontSize="14" fontWeight="700">
               QA Engineering → Data Science Research → Data Analytics
             </text>
 
@@ -498,22 +542,22 @@ function ExperienceMap() {
             <line x1="574" y1="100" x2="574" y2="345" stroke="#ffffff10" />
             <line x1="700" y1="100" x2="700" y2="345" stroke="#ffffff10" />
 
-            <text x="58" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
+            <text x="58" y="372" fill="#cbd5e1" fontSize="14" fontWeight="900">
               2021
             </text>
-            <text x="184" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
+            <text x="184" y="372" fill="#cbd5e1" fontSize="14" fontWeight="900">
               2022
             </text>
-            <text x="310" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
+            <text x="310" y="372" fill="#cbd5e1" fontSize="14" fontWeight="900">
               2023
             </text>
-            <text x="436" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
+            <text x="436" y="372" fill="#cbd5e1" fontSize="14" fontWeight="900">
               2024
             </text>
-            <text x="562" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
+            <text x="562" y="372" fill="#cbd5e1" fontSize="14" fontWeight="900">
               2025
             </text>
-            <text x="688" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
+            <text x="688" y="372" fill="#cbd5e1" fontSize="14" fontWeight="900">
               2026
             </text>
 
@@ -530,27 +574,27 @@ function ExperienceMap() {
             <circle cx="500" cy="160" r="10" fill="#fcd34d" />
             <circle cx="695" cy="90" r="10" fill="#60a5fa" />
 
-            <rect x="82" y="226" width="118" height="40" rx="10" fill="#0d172b" stroke="#67e8f955" />
-            <text x="96" y="244" fill="#e2e8f0" fontSize="13" fontWeight="900">
+            <rect x="78" y="218" width="150" height="52" rx="11" fill="#0d172b" stroke="#67e8f955" />
+            <text x="96" y="240" fill="#e2e8f0" fontSize="15" fontWeight="900">
               QA
             </text>
-            <text x="96" y="258" fill="#cbd5e1" fontSize="10" fontWeight="700">
+            <text x="96" y="260" fill="#cbd5e1" fontSize="13" fontWeight="800">
               Aug 2021 - Feb 2024
             </text>
 
-            <rect x="430" y="106" width="150" height="42" rx="10" fill="#0d172b" stroke="#fcd34d55" />
-            <text x="446" y="124" fill="#e2e8f0" fontSize="13" fontWeight="900">
+            <rect x="420" y="96" width="178" height="54" rx="11" fill="#0d172b" stroke="#fcd34d55" />
+            <text x="438" y="119" fill="#e2e8f0" fontSize="15" fontWeight="900">
               Data Science
             </text>
-            <text x="446" y="139" fill="#cbd5e1" fontSize="10" fontWeight="700">
+            <text x="438" y="140" fill="#cbd5e1" fontSize="13" fontWeight="800">
               Oct 2024 - Mar 2025
             </text>
 
-            <rect x="585" y="32" width="145" height="42" rx="10" fill="#0d172b" stroke="#60a5fa55" />
-            <text x="600" y="50" fill="#e2e8f0" fontSize="13" fontWeight="900">
+            <rect x="558" y="20" width="176" height="56" rx="11" fill="#0d172b" stroke="#60a5fa55" />
+            <text x="576" y="44" fill="#e2e8f0" fontSize="15" fontWeight="900">
               Data Analytics
             </text>
-            <text x="600" y="65" fill="#cbd5e1" fontSize="10" fontWeight="700">
+            <text x="576" y="65" fill="#cbd5e1" fontSize="13" fontWeight="800">
               Feb 2026 - May 2026
             </text>
           </svg>
@@ -558,34 +602,185 @@ function ExperienceMap() {
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-        <div className="rounded-2xl border border-white/10 bg-[#0d172b] p-4">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">
-            QA
-          </p>
-          <p className="mt-2 text-sm font-black text-white">
-            Testing + Validation
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-[#0d172b] p-4">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
-            AI/ML
-          </p>
-          <p className="mt-2 text-sm font-black text-white">
-            Prediction + Models
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-[#0d172b] p-4">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-            BI
-          </p>
-          <p className="mt-2 text-sm font-black text-white">
-            Dashboards + KPIs
-          </p>
-        </div>
+        <MiniCard accent="text-cyan-300" label="QA" value="Testing + Validation" />
+        <MiniCard accent="text-amber-300" label="AI/ML" value="Prediction + Models" />
+        <MiniCard accent="text-blue-300" label="BI" value="Dashboards + KPIs" />
       </div>
     </motion.div>
+  );
+}
+
+function ProjectCard({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: () => void;
+}) {
+  return (
+    <motion.article
+      role="button"
+      tabIndex={0}
+      onClick={onOpen}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          onOpen();
+        }
+      }}
+      whileHover={{ y: -5 }}
+      className="relative cursor-pointer overflow-hidden rounded-[1.7rem] border border-white/10 bg-white/[0.08] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl transition hover:border-cyan-300/60"
+    >
+      <div className="mb-6">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="max-w-xl text-2xl font-black text-white">
+            {project.title}
+          </h3>
+
+          {"repo" in project && project.repo ? (
+            <a
+              href={project.repo}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(event) => event.stopPropagation()}
+              aria-label={`${project.title} GitHub repository`}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-cyan-300/10 text-cyan-300 transition hover:scale-105 hover:bg-cyan-300 hover:text-slate-950"
+            >
+              <FaGithub size={20} />
+            </a>
+          ) : null}
+        </div>
+
+        <span className="mt-4 inline-flex rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1 text-sm font-semibold text-amber-200">
+          {project.type}
+        </span>
+      </div>
+
+      <CaseLine label="Problem" text={project.problem} />
+      <CaseLine label="Approach" text={project.approach} />
+      <CaseLine label="Outcome" text={project.outcome} />
+
+      <div className="mt-5 flex flex-wrap gap-2">
+        {project.tools.map((tool) => (
+          <span
+            key={tool}
+            className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm font-semibold text-cyan-100"
+          >
+            {tool}
+          </span>
+        ))}
+      </div>
+
+      <p className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-cyan-300">
+        View quick summary <ExternalLink size={15} />
+      </p>
+    </motion.article>
+  );
+}
+
+function ProjectModal({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", onEscape);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onEscape);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-5 backdrop-blur-md"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.94, y: 18 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={(event) => event.stopPropagation()}
+        className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-[1.8rem] border border-white/10 bg-[#0d172b] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.55)]"
+      >
+        <div className="mb-6 flex items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
+              Project Summary
+            </p>
+
+            <h3 className="mt-2 text-3xl font-black text-white">
+              {project.title}
+            </h3>
+
+            <span className="mt-4 inline-flex rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1 text-sm font-semibold text-amber-200">
+              {project.type}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/10 text-slate-200 transition hover:bg-white hover:text-slate-950"
+            aria-label="Close project modal"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="grid gap-4">
+          <ModalBlock title="Objective" text={project.problem} />
+          <ModalBlock title="Outcome" text={project.outcome} />
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-white/10 bg-[#091327] p-4">
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-cyan-300">
+            Tools
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {project.tools.map((tool) => (
+              <span
+                key={tool}
+                className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm font-semibold text-cyan-100"
+              >
+                {tool}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {"repo" in project && project.repo ? (
+          <a
+            href={project.repo}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-black text-slate-950 transition hover:bg-cyan-200"
+          >
+            <FaGithub size={18} />
+            Open GitHub Repository
+          </a>
+        ) : null}
+      </motion.div>
+    </div>
+  );
+}
+
+function ModalBlock({ title, text }: { title: string; text: string }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-[#091327] p-4">
+      <p className="text-sm font-black uppercase tracking-[0.2em] text-cyan-300">
+        {title}
+      </p>
+      <p className="mt-2 leading-7 text-slate-300">{text}</p>
+    </div>
   );
 }
 
@@ -718,6 +913,25 @@ function SkillPipeline({ title, steps }: { title: string; steps: string[] }) {
   );
 }
 
+function MiniCard({
+  accent,
+  label,
+  value,
+}: {
+  accent: string;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-[#0d172b] p-4">
+      <p className={`text-xs font-bold uppercase tracking-[0.2em] ${accent}`}>
+        {label}
+      </p>
+      <p className="mt-2 text-sm font-black text-white">{value}</p>
+    </div>
+  );
+}
+
 function BookSection({
   id,
   title,
@@ -765,26 +979,59 @@ function ContactCard({
   label,
   value,
   href,
+  copyValue,
 }: {
   icon: ReactNode;
   label: string;
   value: string;
   href: string;
+  copyValue?: string;
 }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyText = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!copyValue) return;
+
+    await navigator.clipboard.writeText(copyValue);
+    setCopied(true);
+
+    window.setTimeout(() => {
+      setCopied(false);
+    }, 1600);
+  };
+
   return (
     <a
       href={href}
-      target={href === "#" ? undefined : "_blank"}
-      rel={href === "#" ? undefined : "noreferrer"}
-      className="rounded-[1.7rem] border border-white/10 bg-white/[0.08] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan-300/60"
+      target={href === "#" || href.startsWith("mailto:") ? undefined : "_blank"}
+      rel={href === "#" || href.startsWith("mailto:") ? undefined : "noreferrer"}
+      className="relative rounded-[1.7rem] border border-white/10 bg-white/[0.08] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan-300/60"
     >
+      {copyValue ? (
+        <button
+          type="button"
+          onClick={copyText}
+          className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-2xl border border-cyan-300/30 bg-cyan-300/10 text-cyan-200 transition hover:bg-cyan-300 hover:text-slate-950"
+          aria-label="Copy email"
+        >
+          {copied ? <Check size={18} /> : <Copy size={18} />}
+        </button>
+      ) : null}
+
       <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-300/10 text-cyan-300">
         {icon}
       </div>
 
       <p className="text-sm font-medium text-slate-400">{label}</p>
 
-      <p className="mt-2 font-black text-white">{value}</p>
+      <p className="mt-2 break-all font-black text-white">{value}</p>
+
+      {copied ? (
+        <p className="mt-3 text-sm font-bold text-cyan-300">Copied!</p>
+      ) : null}
     </a>
   );
 }
