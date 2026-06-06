@@ -453,23 +453,14 @@ function ExperienceMap() {
       </div>
 
       <div className="rounded-[1.4rem] border border-white/10 bg-[#0d172b] p-5">
-        <div className="mb-3 grid grid-cols-6 text-xs font-bold text-slate-400">
-          <span>2021</span>
-          <span>2022</span>
-          <span>2023</span>
-          <span>2024</span>
-          <span>2025</span>
-          <span className="text-right">2026</span>
-        </div>
-
-        <div className="relative h-[300px] overflow-hidden rounded-[1.2rem] border border-white/10 bg-[#091327] p-4">
+        <div className="relative h-[330px] overflow-hidden rounded-[1.2rem] border border-white/10 bg-[#091327] p-4">
           <svg
             ref={chartRef}
             className="h-full w-full"
-            viewBox="0 0 700 360"
-            preserveAspectRatio="none"
+            viewBox="0 0 760 420"
+            preserveAspectRatio="xMidYMid meet"
           >
-            <rect width="700" height="360" rx="24" fill="#091327" />
+            <rect width="760" height="420" rx="24" fill="#091327" />
 
             <defs>
               <linearGradient id="careerLine" x1="0" x2="1" y1="0" y2="0">
@@ -487,75 +478,79 @@ function ExperienceMap() {
               </filter>
             </defs>
 
-            <text x="32" y="34" fill="#67e8f9" fontSize="15" fontWeight="800">
+            <text x="42" y="42" fill="#67e8f9" fontSize="16" fontWeight="800">
               Career Progression
             </text>
 
-            <text x="32" y="58" fill="#94a3b8" fontSize="12" fontWeight="600">
+            <text x="42" y="66" fill="#94a3b8" fontSize="12" fontWeight="600">
               QA Engineering → Data Science Research → Data Analytics
             </text>
 
-            <line x1="55" y1="285" x2="650" y2="285" stroke="#ffffff20" />
-            <line x1="55" y1="225" x2="650" y2="225" stroke="#ffffff14" />
-            <line x1="55" y1="165" x2="650" y2="165" stroke="#ffffff14" />
-            <line x1="55" y1="105" x2="650" y2="105" stroke="#ffffff14" />
+            <line x1="70" y1="330" x2="700" y2="330" stroke="#ffffff20" />
+            <line x1="70" y1="260" x2="700" y2="260" stroke="#ffffff14" />
+            <line x1="70" y1="190" x2="700" y2="190" stroke="#ffffff14" />
+            <line x1="70" y1="120" x2="700" y2="120" stroke="#ffffff14" />
 
-            <line x1="55" y1="85" x2="55" y2="300" stroke="#ffffff10" />
-            <line x1="174" y1="85" x2="174" y2="300" stroke="#ffffff10" />
-            <line x1="293" y1="85" x2="293" y2="300" stroke="#ffffff10" />
-            <line x1="412" y1="85" x2="412" y2="300" stroke="#ffffff10" />
-            <line x1="531" y1="85" x2="531" y2="300" stroke="#ffffff10" />
-            <line x1="650" y1="85" x2="650" y2="300" stroke="#ffffff10" />
+            <line x1="70" y1="100" x2="70" y2="345" stroke="#ffffff10" />
+            <line x1="196" y1="100" x2="196" y2="345" stroke="#ffffff10" />
+            <line x1="322" y1="100" x2="322" y2="345" stroke="#ffffff10" />
+            <line x1="448" y1="100" x2="448" y2="345" stroke="#ffffff10" />
+            <line x1="574" y1="100" x2="574" y2="345" stroke="#ffffff10" />
+            <line x1="700" y1="100" x2="700" y2="345" stroke="#ffffff10" />
 
-            <text x="45" y="322" fill="#94a3b8" fontSize="11" fontWeight="700">
+            <text x="58" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
               2021
             </text>
-            <text x="164" y="322" fill="#94a3b8" fontSize="11" fontWeight="700">
+            <text x="184" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
               2022
             </text>
-            <text x="283" y="322" fill="#94a3b8" fontSize="11" fontWeight="700">
+            <text x="310" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
               2023
             </text>
-            <text x="402" y="322" fill="#94a3b8" fontSize="11" fontWeight="700">
+            <text x="436" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
               2024
             </text>
-            <text x="521" y="322" fill="#94a3b8" fontSize="11" fontWeight="700">
+            <text x="562" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
               2025
             </text>
-            <text x="630" y="322" fill="#94a3b8" fontSize="11" fontWeight="700">
+            <text x="688" y="372" fill="#cbd5e1" fontSize="12" fontWeight="800">
               2026
             </text>
 
             <path
-              d="M70 255 C150 218, 250 225, 335 195 C395 173, 430 148, 470 150 C535 152, 585 105, 640 86"
+              d="M90 300 C170 245, 270 252, 360 215 C425 188, 470 160, 520 160 C590 162, 645 108, 695 90"
               fill="none"
               stroke="url(#careerLine)"
-              strokeWidth="7"
+              strokeWidth="8"
               strokeLinecap="round"
               filter="url(#glow)"
             />
 
-            <circle cx="115" cy="235" r="9" fill="#67e8f9" />
-            <circle cx="455" cy="150" r="9" fill="#fcd34d" />
-            <circle cx="640" cy="86" r="9" fill="#60a5fa" />
+            <circle cx="125" cy="275" r="10" fill="#67e8f9" />
+            <circle cx="500" cy="160" r="10" fill="#fcd34d" />
+            <circle cx="695" cy="90" r="10" fill="#60a5fa" />
 
-            <text x="90" y="218" fill="#e2e8f0" fontSize="13" fontWeight="800">
+            <rect x="82" y="226" width="118" height="40" rx="10" fill="#0d172b" stroke="#67e8f955" />
+            <text x="96" y="244" fill="#e2e8f0" fontSize="13" fontWeight="900">
               QA
             </text>
-            <text x="398" y="132" fill="#e2e8f0" fontSize="13" fontWeight="800">
-              Data Science
-            </text>
-            <text x="545" y="68" fill="#e2e8f0" fontSize="13" fontWeight="800">
-              Data Analytics
-            </text>
-
-            <text x="70" y="274" fill="#94a3b8" fontSize="11" fontWeight="600">
+            <text x="96" y="258" fill="#cbd5e1" fontSize="10" fontWeight="700">
               Aug 2021 - Feb 2024
             </text>
-            <text x="385" y="172" fill="#94a3b8" fontSize="11" fontWeight="600">
+
+            <rect x="430" y="106" width="150" height="42" rx="10" fill="#0d172b" stroke="#fcd34d55" />
+            <text x="446" y="124" fill="#e2e8f0" fontSize="13" fontWeight="900">
+              Data Science
+            </text>
+            <text x="446" y="139" fill="#cbd5e1" fontSize="10" fontWeight="700">
               Oct 2024 - Mar 2025
             </text>
-            <text x="540" y="108" fill="#94a3b8" fontSize="11" fontWeight="600">
+
+            <rect x="585" y="32" width="145" height="42" rx="10" fill="#0d172b" stroke="#60a5fa55" />
+            <text x="600" y="50" fill="#e2e8f0" fontSize="13" fontWeight="900">
+              Data Analytics
+            </text>
+            <text x="600" y="65" fill="#cbd5e1" fontSize="10" fontWeight="700">
               Feb 2026 - May 2026
             </text>
           </svg>

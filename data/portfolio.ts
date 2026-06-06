@@ -38,7 +38,6 @@ export const skills = [
       "Predictive Modelling",
       "Supervised Learning",
       "Unsupervised Learning",
-      "Clustering",
       "Deep Learning",
       "NLP",
       "Semantic Embeddings",
