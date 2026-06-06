@@ -28,7 +28,7 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden bg-[#f3f4ef] text-[#101010]">
       <Navbar />
 
-      <section id="cover" className="px-4 pt-20 pb-8">
+      <section id="home" className="px-4 pt-20 pb-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
             <motion.div
@@ -471,7 +471,7 @@ function Navbar() {
     <header className="fixed left-0 top-0 z-50 w-full border-b border-black/10 bg-[#f3f4ef]/85 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
         <a
-          href="#cover"
+          href="#home"
           className="text-base font-black tracking-tight sm:text-lg"
         >
           Alistair Pereira Portfolio<span className="text-cyan-600">.</span>
@@ -481,7 +481,7 @@ function Navbar() {
           {navItems.map((item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={item === "Home" ? "#home" : `#${item.toLowerCase()}`}
               className="text-sm font-medium text-slate-600 transition hover:text-slate-950"
             >
               {item}
