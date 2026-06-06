@@ -1,63 +1,17 @@
 export const profile = {
   name: "Alistair Simpson Pereira",
   shortName: "Alistair Pereira",
-  title: "Data Analytics |  AI/ML | QA Testing ",
-  subtitle: "Power BI • SQL • Manual Testing • Postman • Python • AI/ML",
+  title: "Data Analytics | AI/ML | QA Testing",
+  subtitle: "Power BI • SQL • Python • Machine Learning • Manual Testing",
   location: "Germany",
   email: "alistairpereira241999@gmail.com",
 
-  // Replace with your real links
   linkedin: "https://www.linkedin.com/in/alistair-pereira-45571018a/",
   github: "https://github.com/AlistairPereira",
 
-  headline:
-    "I work at the intersection of data, intelligent systems, and software quality.",
   summary:
     "I analyze data, build dashboards, validate SQL/API data, test applications, and develop AI/ML-driven solutions for real-world problems.",
 };
-
-export const bookStats = [
-  {
-    label: "Focus",
-    value: "Analytics + AI/ML + QA",
-  },
-  {
-    label: "Analytics",
-    value: "Power BI, SQL, Python",
-  },
-  {
-    label: "AI/ML",
-    value: "ML, Deep Learning, NLP, LLM Agents",
-  },
-  {
-    label: "QA Testing",
-    value: "Manual, API, SQL Validation",
-  },
-];
-
-export const chapters = [
-  {
-    title: "About Me",
-    href: "#about",
-    text: "A Master’s graduate profile combining data analytics, AI/ML project work, and quality assurance experience.",
-  },
-  {
-    title: "Skills",
-    href: "#skills",
-    text: "Core skills across Power BI, SQL, Python, machine learning, QA testing, and technical tools.",
-  },
-  {
-    title: "Experience",
-    href: "#experience",
-    text: "Professional experience across analytics, data science research, and software quality assurance.",
-  },
-  {
-    title: "Projects",
-    href: "#projects",
-    text: "Case studies covering analytics, NLP, LLM agents, data engineering, and dashboard development.",
-  },
-];
-
 
 export const skills = [
   {
@@ -127,34 +81,34 @@ export const skills = [
 export const experience = [
   {
     role: "Data Analyst Intern",
-    company: "Biotest GmbH & Co. KGaA, Germany",
+    company: "Biotest AG, Germany",
     period: "Feb 2026 - May 2026",
     description:
       "Developed Power BI dashboards to track operational and financial KPIs, performance trends, and business reporting needs. Improved reporting efficiency by automating dashboard updates, validating data accuracy, and turning business data into clear insights for decision-making.",
   },
   {
-  role: "Data Science Research Student",
-  company: "e.Ray Europa GmbH, Germany",
-  period: "Oct 2024 - Mar 2025",
-  description:
-    "Worked on machine learning-based time-series prediction using environmental datasets. Supported data preparation, model evaluation, and a 5-day prediction pipeline to help with risk detection, reporting, and data-driven decision-making.",
-},
-{
-  role: "QA Engineer",
-  company: "VVP Healthcare Evolution Pvt Ltd, India",
-  period: "Aug 2021 - Feb 2024",
-  description:
-    "Performed manual testing across functional, regression, smoke, sanity, UI, and end-to-end workflows. Created test cases, validated data using SQL, tested APIs, reported defects, and collaborated with developers and product teams in Agile/Scrum workflows.",
-},
+    role: "Data Science Research Student",
+    company: "e.Ray Europa GmbH, Germany",
+    period: "Oct 2024 - Mar 2025",
+    description:
+      "Worked on machine learning-based time-series prediction using environmental datasets. Supported data preparation, model evaluation, and a 5-day prediction pipeline to help with risk detection, reporting, and data-driven decision-making.",
+  },
+  {
+    role: "QA Engineer",
+    company: "VVP Healthcare Evolution Pvt Ltd, India",
+    period: "Aug 2021 - Feb 2024",
+    description:
+      "Performed manual testing across functional, regression, smoke, sanity, UI, and end-to-end workflows. Created test cases, validated data using SQL, tested APIs, reported defects, and collaborated with developers and product teams in Agile/Scrum workflows.",
+  },
 ];
 
 export const projects = [
   {
-    title: "Soccer Analytics - SQL & Power BI",
+    title: "Football SQL & Power BI Analytics",
     type: "Data Analytics",
     repo: "https://github.com/AlistairPereira/football-sql-powerbi-analytics",
     problem:
-      "Football match data of top 5 European leagues was raw and difficult to analyze directly for team and league performance insights.",
+      "Football match data was raw and difficult to analyze directly for team and league performance insights.",
     approach:
       "Cleaned the data, designed SQL views, structured the database, and built Power BI dashboards.",
     outcome:
@@ -204,13 +158,12 @@ export const projects = [
   {
     title: "Real-Time Air Traffic Analytics Pipeline",
     type: "Data Engineering",
-    repo: "https://github.com/AlistairPereira/data_management",
     problem:
       "Live aircraft data needed to be collected, transformed, stored, and visualized for real-time analysis.",
     approach:
       "Used Python and REST API extraction, stored the data in BigQuery, and visualized it in Power BI.",
     outcome:
       "Built an end-to-end real-time analytics pipeline with dashboard-ready aviation insights.",
-    tools: ["Python", "REST API", "BigQuery", "Tableau", "GitHub"],
+    tools: ["Python", "REST API", "BigQuery", "Power BI", "GitHub"],
   },
 ];
