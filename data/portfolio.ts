@@ -27,7 +27,7 @@ export const bookStats = [
   },
   {
     label: "AI/ML",
-    value: "ML, NLP, LLM Agents",
+    value: "ML, Deep Learning, NLP, LLM Agents",
   },
   {
     label: "QA Testing",
@@ -133,19 +133,19 @@ export const experience = [
       "Developed Power BI dashboards to track operational and financial KPIs, performance trends, and business reporting needs. Improved reporting efficiency by automating dashboard updates, validating data accuracy, and turning business data into clear insights for decision-making.",
   },
   {
-    role: "Data Science Research Student",
-    company: "e.Ray Europa GmbH, Germany",
-    period: "Oct 2024 - Mar 2025",
-    description:
-      "Worked with large-scale time-series environmental datasets, including preprocessing, feature engineering, validation, and model evaluation. Built a 5-day prediction pipeline to support risk detection, reporting, and data-driven decision-making.",
-  },
-  {
-    role: "QA Engineer",
-    company: "VVP Healthcare Evolution Pvt Ltd, India",
-    period: "Aug 2021 - Feb 2024",
-    description:
-      "Performed manual testing across regression, smoke, sanity, UI, functional, and end-to-end workflows. Validated backend data using SQL, tested APIs with Postman, tracked defects in Jira, and collaborated with developers and product teams in Agile/Scrum workflows.",
-  },
+  role: "Data Science Research Student",
+  company: "e.Ray Europa GmbH, Germany",
+  period: "Oct 2024 - Mar 2025",
+  description:
+    "Worked on machine learning-based time-series prediction using environmental datasets. Supported data preparation, model evaluation, and a 5-day prediction pipeline to help with risk detection, reporting, and data-driven decision-making.",
+},
+{
+  role: "QA Engineer",
+  company: "VVP Healthcare Evolution Pvt Ltd, India",
+  period: "Aug 2021 - Feb 2024",
+  description:
+    "Performed manual testing across functional, regression, smoke, sanity, UI, and end-to-end workflows. Created test cases, validated data using SQL, tested APIs, reported defects, and collaborated with developers and product teams in Agile/Scrum workflows.",
+},
 ];
 
 export const projects = [
